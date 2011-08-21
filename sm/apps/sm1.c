@@ -3,7 +3,7 @@
 
 #include "../csm/csm_all.h"
 
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 struct sm1_params {
 	const char * file1;
@@ -18,7 +18,7 @@ struct sm1_params {
 
 
 extern int distance_counter;
-extern void sm_options(struct sm_params*p, struct option*ops);
+extern void sm_csm_options(struct sm_params*p, struct csm_option*ops);
 
 
 const char *sm1_banner = 
@@ -53,28 +53,28 @@ const char *sm1_banner =
 	
 int main(int argc, const char*argv[]) {
 	sm_set_program_name(argv[0]);
-	options_banner(sm1_banner);
+	csm_options_banner(sm1_banner);
 	
 	struct sm_params params;
 	struct sm_result result;
 	
-	struct option* ops = options_allocate(100);
-	options_string(ops, "file1", &p.file1, "file1.txt",
+	struct csm_option* ops = csm_options_allocate(100);
+	csm_options_string(ops, "file1", &p.file1, "file1.txt",
 		"File with first series of scans (at pose1)");
-	options_string(ops, "file2", &p.file2, "file2.txt",
+	csm_options_string(ops, "file2", &p.file2, "file2.txt",
 		"File with second series of scans (at pose2)");
-	options_string(ops, "file_jj", &p.file_jj, "",
+	csm_options_string(ops, "file_jj", &p.file_jj, "",
 		"File for journaling -- if left empty, journal not open.");
-	options_string(ops, "out", &p.file_output, "stdout", "Output file (JSON structs)");
-	options_int(ops, "algo", &p.algo, 0, "Which algorithm to use (0:(pl)ICP 1:gpm-stripped 2:HSM) ");
+	csm_options_string(ops, "out", &p.file_output, "stdout", "Output file (JSON structs)");
+	csm_options_int(ops, "algo", &p.algo, 0, "Which algorithm to use (0:(pl)ICP 1:gpm-stripped 2:HSM) ");
 
-	options_int(ops, "debug", &p.debug, 0, "Shows debug information");
-	options_int(ops, "write_post_mortem", &p.write_post_mortem, 1, "In case of failure, writes a post mortem.");
+	csm_options_int(ops, "debug", &p.debug, 0, "Shows debug information");
+	csm_options_int(ops, "write_post_mortem", &p.write_post_mortem, 1, "In case of failure, writes a post mortem.");
 
-	sm_options(&params, ops);
-	if(!options_parse_args(ops, argc, argv)) {
+	sm_csm_options(&params, ops);
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, "\n\nUsage:\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 
@@ -156,7 +156,7 @@ int main(int argc, const char*argv[]) {
 			sprintf(script, "%s.sh", casename);
 			
 			FILE * f = fopen(file_config, "w");
-			options_dump(ops,f,0);
+			csm_options_dump(ops,f,0);
 			fclose(f);
 
 			f = fopen(file1, "w");

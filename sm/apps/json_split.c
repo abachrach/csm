@@ -1,4 +1,4 @@
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 #include <string.h>
 #include "../csm/csm_all.h"
 
@@ -8,14 +8,14 @@ int main(int argc, const char * argv[]) {
 	const char*input_filename;
 	const char*output_pattern_op;
 	
-	struct option* ops = options_allocate(3);
-	options_string(ops, "in", &input_filename, "stdin", "input file (JSON)");
-	options_string(ops, "out", &output_pattern_op, "./ld_split^02d.json", "output pattern; printf() pattern, but write '^' instead of '%'");
+	struct csm_option* ops = csm_options_allocate(3);
+	csm_options_string(ops, "in", &input_filename, "stdin", "input file (JSON)");
+	csm_options_string(ops, "out", &output_pattern_op, "./ld_split^02d.json", "output pattern; printf() pattern, but write '^' instead of '%'");
 	
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, "%s : splits a JSON file into many files."
-			"\n\nOptions:\n", argv[0]);
-		options_print_help(ops, stderr);
+			"\n\ncsm_options:\n", argv[0]);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

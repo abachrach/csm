@@ -3,7 +3,7 @@
 #include <gsl/gsl_math.h>
 
 #include <math.h>
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include "../csm/csm_all.h"
 
@@ -34,23 +34,23 @@ int main(int argc, const char ** argv) {
 	
 	struct ld_noise_params p;
 	
-	options_banner(banner);
+	csm_options_banner(banner);
 	
-	struct option* ops = options_allocate(10);
-	options_double(ops, "sigma_theta_deg", &p.sigma_theta_deg, 0.0, 
+	struct csm_option* ops = csm_options_allocate(10);
+	csm_options_double(ops, "sigma_theta_deg", &p.sigma_theta_deg, 0.0, 
 		"Std deviation of gaussian noise for theta (deg) (disabled if 0)");
-	options_double(ops, "sigma_xy", &p.sigma_xy, 0.0, 
+	csm_options_double(ops, "sigma_xy", &p.sigma_xy, 0.0, 
 		"Std deviation of gaussian noise for x,y (disabled if 0)");
-	options_int(ops, "seed", &p.seed, 0, 
+	csm_options_int(ops, "seed", &p.seed, 0, 
 		"Seed for random number generator (if 0, use GSL_RNG_SEED env. variable).");
-	options_string(ops, "in", &p.file_input, "stdin", "Input file ");
-	options_string(ops, "out", &p.file_output, "stdout", "Output file ");
+	csm_options_string(ops, "in", &p.file_input, "stdin", "Input file ");
+	csm_options_string(ops, "out", &p.file_output, "stdout", "Output file ");
 
-	options_int(ops, "debug", &p.debug, 0, "Shows debug information");
+	csm_options_int(ops, "debug", &p.debug, 0, "Shows debug information");
 	
 		
-	if(!options_parse_args(ops, argc, argv)) {
-		options_print_help(ops, stderr);
+	if(!csm_options_parse_args(ops, argc, argv)) {
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

@@ -3,7 +3,7 @@
 #include <gsl/gsl_randist.h>
 #include <gsl/gsl_math.h>
 #include <math.h>
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include "../csm/csm_all.h"
 
@@ -36,23 +36,23 @@ int main(int argc, const char ** argv) {
 	
 	struct ld_exp_tro1_params p;
 	
-	options_banner(banner);
+	csm_options_banner(banner);
 	
-	struct option* ops = options_allocate(10);
-	options_double(ops, "max_xy_error", &p.max_xy_error, 10.0, "Maximum error for x,y (m)");
-	options_double(ops, "max_theta_error_deg", &p.max_theta_error_deg, 10.0, "Maximum error for orientation (deg)");
-	options_int   (ops, "seed", &p.seed, 0, "Seed for random number generator (if 0, use GSL_RNG_SEED env. variable).");
+	struct csm_option* ops = csm_options_allocate(10);
+	csm_options_double(ops, "max_xy_error", &p.max_xy_error, 10.0, "Maximum error for x,y (m)");
+	csm_options_double(ops, "max_theta_error_deg", &p.max_theta_error_deg, 10.0, "Maximum error for orientation (deg)");
+	csm_options_int   (ops, "seed", &p.seed, 0, "Seed for random number generator (if 0, use GSL_RNG_SEED env. variable).");
 
-	options_int(ops, "num_per_scan", &p.num_per_scan, 10, "Number of trials for each scan.");
+	csm_options_int(ops, "num_per_scan", &p.num_per_scan, 10, "Number of trials for each scan.");
 
-	options_string(ops, "in", &p.file_input, "stdin", "Input file ");
-	options_string(ops, "out1", &p.file_output1, "stdout", "Output file for first scan");
-	options_string(ops, "out2", &p.file_output2, "stdout", "Output file for second scan");
+	csm_options_string(ops, "in", &p.file_input, "stdin", "Input file ");
+	csm_options_string(ops, "out1", &p.file_output1, "stdout", "Output file for first scan");
+	csm_options_string(ops, "out2", &p.file_output2, "stdout", "Output file for second scan");
 	
-	options_int(ops, "debug", &p.debug, 0, "Shows debug information");
+	csm_options_int(ops, "debug", &p.debug, 0, "Shows debug information");
 	
-	if(!options_parse_args(ops, argc, argv)) {
-		options_print_help(ops, stderr);
+	if(!csm_options_parse_args(ops, argc, argv)) {
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

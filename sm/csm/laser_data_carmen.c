@@ -123,7 +123,7 @@ LDP ld_from_carmen_string(const char*line) {
 	if(read_next_double(line,&cur,ld->odometry+2)) goto error;
 
 	/* Following: ipc_timestamp hostname timestamp */
-	/* Two options:
+	/* Two csm_options:
 		double string double: 
 			the first is timestamp in seconds, the second is discarded
 		int string int:

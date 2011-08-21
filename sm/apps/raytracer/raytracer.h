@@ -11,7 +11,7 @@ using namespace RayTracer;
 #include <csm/csm_all.h>
 using namespace CSM;
 
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 
 #endif

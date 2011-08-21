@@ -6,7 +6,7 @@
 
 #include <cairo-pdf.h>
 
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include "../csm/csm_all.h"
 #include "../csm/laser_data_drawing.h"
@@ -48,24 +48,24 @@ int main(int argc, const char** argv)
 	anim_params p;
 	set_defaults(&p);
 	
-	struct option* ops = options_allocate(100);
-	options_string(ops, "in", &p.file_input, "stdin", "Input file (defaults to stdin)");
-	options_string(ops, "out", &p.file_output, "sm_animate_%02d.pdf", "Output file ");
+	struct csm_option* ops = csm_options_allocate(100);
+	csm_options_string(ops, "in", &p.file_input, "stdin", "Input file (defaults to stdin)");
+	csm_options_string(ops, "out", &p.file_output, "sm_animate_%02d.pdf", "Output file ");
 
-	options_int(ops, "write_info", &p.write_info, 0, "Writes informations and statistics in the picture.");
-	options_int(ops, "max_iterations", &p.max_iterations, 10, "Maximum number of iterations");
-	options_int(ops, "zoom_ray", &p.zoom_ray, -1, "If >= 0, the action is zoomed on a particular ray.");
-	options_int(ops, "width_pt", &p.width_pt, 500, "Maximum width, in points, of the PDF.");
-	options_int(ops, "height_pt", &p.height_pt, 500, "Maximum height, in points, of the PDF.");
-	options_double(ops, "padding", &p.padding, 0.2, "Padding, in meters, to be added around figure.");
+	csm_options_int(ops, "write_info", &p.write_info, 0, "Writes informations and statistics in the picture.");
+	csm_options_int(ops, "max_iterations", &p.max_iterations, 10, "Maximum number of iterations");
+	csm_options_int(ops, "zoom_ray", &p.zoom_ray, -1, "If >= 0, the action is zoomed on a particular ray.");
+	csm_options_int(ops, "width_pt", &p.width_pt, 500, "Maximum width, in points, of the PDF.");
+	csm_options_int(ops, "height_pt", &p.height_pt, 500, "Maximum height, in points, of the PDF.");
+	csm_options_double(ops, "padding", &p.padding, 0.2, "Padding, in meters, to be added around figure.");
 
-	lds_add_options(&(p.laser_ref_s), ops, "ref_", "");
-	lds_add_options(&(p.laser_sens_s), ops, "sens_", "");
-	ls_add_options(&(p.corr), ops, "corr_", "");
+	lds_add_csm_options(&(p.laser_ref_s), ops, "ref_", "");
+	lds_add_csm_options(&(p.laser_sens_s), ops, "sens_", "");
+	ls_add_csm_options(&(p.corr), ops, "corr_", "");
 	
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		sm_info("Draws ICP animation. It reads the output created by sm2 when given the 'file_jj' switch. \n\nUsage:\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 

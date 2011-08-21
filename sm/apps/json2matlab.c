@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <string.h>
 #include "../csm/csm_all.h"
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include <json-c/json.h>
 #include <json-c/json_object_private.h>
@@ -26,7 +26,7 @@ const char * banner =
 " 2) with two parameters, \n"
 "     $ json2matlab dir/mydata.json dir/out.m \n" 
 "    creates a Matlab function 'out' inside the file 'dir/out.m'. \n"
-" 3) otherwise, use the options switches. \n"
+" 3) otherwise, use the csm_options switches. \n"
 " \n"
 " By default it creates a complete script of the kind:\n"
 " \n"
@@ -49,14 +49,14 @@ int main(int argc, const char * argv[]) {
 	int complete_script;
 	int debug;
 	
-	options_banner(banner);
+	csm_options_banner(banner);
 	
-	struct option* ops = options_allocate(8);
-	options_string(ops, "in", &input_filename, "stdin", "input file (JSON)");
-	options_string(ops, "out", &out_filename, "stdout", "output file (MATLAB)");
-	options_string(ops, "function", &function, "", "Matlab function name (if empty, use basename of out)");
-	options_int(ops, "complete_script", &complete_script, 1, "Write complete script 'function  res = ...'");
-	options_int(ops, "debug", &debug, 1, "Shows debug information");
+	struct csm_option* ops = csm_options_allocate(8);
+	csm_options_string(ops, "in", &input_filename, "stdin", "input file (JSON)");
+	csm_options_string(ops, "out", &out_filename, "stdout", "output file (MATLAB)");
+	csm_options_string(ops, "function", &function, "", "Matlab function name (if empty, use basename of out)");
+	csm_options_int(ops, "complete_script", &complete_script, 1, "Write complete script 'function  res = ...'");
+	csm_options_int(ops, "debug", &debug, 1, "Shows debug information");
 	
 	if(argc == 2 && (argv[1][0] != '-')) { 
 		/* one parameter */
@@ -72,7 +72,7 @@ int main(int argc, const char * argv[]) {
 		out_filename = argv[2];
 	} else {
 		/* FIXME help not shown */
-		if(!options_parse_args(ops, argc, argv))
+		if(!csm_options_parse_args(ops, argc, argv))
 			return -1;
 	}
 

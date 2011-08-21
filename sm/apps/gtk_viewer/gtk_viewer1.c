@@ -32,16 +32,16 @@ int main (int argc, char **argv)
 	p->pose_path.width = 0.1;
 	p->pose_path.color = "#f00";
 	
-	struct option * ops = options_allocate(100);
-	options_string(ops, "in", &(p->input_filename), "stdin", "input file (Carmen or JSON)");
-	options_string(ops, "use", &(p->use), "estimate", "One in 'odometry','estimate','true_pose'");
+	struct csm_option * ops = csm_options_allocate(100);
+	csm_options_string(ops, "in", &(p->input_filename), "stdin", "input file (Carmen or JSON)");
+	csm_options_string(ops, "use", &(p->use), "estimate", "One in 'odometry','estimate','true_pose'");
 	
-	lds_add_options(&(p->laser), ops, "laser_", "");
-	ls_add_options(&(p->pose_path), ops, "path_", "");
+	lds_add_csm_options(&(p->laser), ops, "laser_", "");
+	ls_add_csm_options(&(p->pose_path), ops, "path_", "");
 
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, "A simple experimental GTK viewer.\n\nUsage:\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 

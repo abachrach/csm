@@ -1,4 +1,4 @@
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 #include "../csm/csm_all.h"
 
 void jo_write_plain(JO jo, FILE* out);
@@ -11,16 +11,16 @@ int main(int argc, const char * argv[]) {
 	const char*field;
 	int exit_on_error;
 	
-	struct option* ops = options_allocate(3);
-	options_string(ops, "in", &input_filename, "stdin", "input file (JSON)");
-	options_string(ops, "out", &output_filename, "stdout", "output file (JSON)");
-	options_int(ops, "exit_on_error", &exit_on_error, 0, "if true, exit if object has no field");
-	options_string(ops, "field", &field, "field_name", "field to extract from structure");
+	struct csm_option* ops = csm_options_allocate(3);
+	csm_options_string(ops, "in", &input_filename, "stdin", "input file (JSON)");
+	csm_options_string(ops, "out", &output_filename, "stdout", "output file (JSON)");
+	csm_options_int(ops, "exit_on_error", &exit_on_error, 0, "if true, exit if object has no field");
+	csm_options_string(ops, "field", &field, "field_name", "field to extract from structure");
 	
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		sm_info("Extracts a field from JSON object."
-			"\n\nOptions:\n");
-		options_print_help(ops, stderr);
+			"\n\ncsm_options:\n");
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

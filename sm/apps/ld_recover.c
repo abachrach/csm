@@ -1,5 +1,5 @@
 #include <math.h>
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include "../csm/csm_all.h"
 #include "../csm/laser_data_drawing.h"
@@ -18,19 +18,19 @@ int main(int argc, const char * argv[]) {
 	const char *ref_field_string; ld_reference ref_field;
 	const char *out_field_string; ld_reference out_field;
 
-	struct option* ops = options_allocate(15);
-	options_string(ops, "in", &in_filename, "stdin", "scan matching log");
-	options_string(ops, "ref", &ref_filename, "ref.log", "slam log");
-	options_string(ops, "out", &out_filename, "stdout", "output file");
+	struct csm_option* ops = csm_options_allocate(15);
+	csm_options_string(ops, "in", &in_filename, "stdin", "scan matching log");
+	csm_options_string(ops, "ref", &ref_filename, "ref.log", "slam log");
+	csm_options_string(ops, "out", &out_filename, "stdout", "output file");
 
-	options_string(ops, "ref_field", &ref_field_string, "estimate", "What field to find in ref.");
-	options_string(ops, "out_field", &out_field_string, "true_pose", "What field to copy to.");
+	csm_options_string(ops, "ref_field", &ref_field_string, "estimate", "What field to find in ref.");
+	csm_options_string(ops, "out_field", &out_field_string, "true_pose", "What field to copy to.");
 		
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, " This program works on two logs: A and B. "
 		"For each scan in A, the program searches for the scan in B having the same timestamp. "
 		"Then, the true_pose field in B is copied to the scan form A, and it is written to the output.\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

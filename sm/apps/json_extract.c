@@ -1,4 +1,4 @@
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 #include "../csm/csm_all.h"
 
 int main(int argc, const char * argv[]) {
@@ -8,15 +8,15 @@ int main(int argc, const char * argv[]) {
 	const char*input_filename;
 	const char*output_filename;
 	
-	struct option* ops = options_allocate(3);
-	options_int(ops, "nth", &nth, 0, "Index of object to extract.");
-	options_string(ops, "in", &input_filename, "stdin", "input file (JSON)");
-	options_string(ops, "out", &output_filename, "stdout", "output file (JSON)");
+	struct csm_option* ops = csm_options_allocate(3);
+	csm_options_int(ops, "nth", &nth, 0, "Index of object to extract.");
+	csm_options_string(ops, "in", &input_filename, "stdin", "input file (JSON)");
+	csm_options_string(ops, "out", &output_filename, "stdout", "output file (JSON)");
 	
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, "%s : extracts n-th JSON object from stream."
-			"\n\nOptions:\n", argv[0]);
-		options_print_help(ops, stderr);
+			"\n\ncsm_options:\n", argv[0]);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

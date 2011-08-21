@@ -1,7 +1,7 @@
 #include <libgen.h>
 #include <math.h>
 
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 #include "../csm/csm_all.h"
 
 
@@ -16,13 +16,13 @@ int main(int argc, const char * argv[]) {
 	
 	struct ld_fisher_params p;
 	
-	struct option* ops = options_allocate(3);
-	options_double(ops, "sigma", &p.sigma, 0.01, 
+	struct csm_option* ops = csm_options_allocate(3);
+	csm_options_double(ops, "sigma", &p.sigma, 0.01, 
 		"Std deviation of gaussian noise");
 		
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, "Writes Fisher's information matrix.\n\nUsage:\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 

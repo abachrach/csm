@@ -9,7 +9,7 @@
 #include <cairo.h>
 #include <cairo-pdf.h>
 
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include "../csm/csm_all.h"
 
@@ -50,23 +50,23 @@ int main(int argc, const char*argv[]) {
 
 	struct params p;
 	
-	struct option * ops = options_allocate(12);
-	options_int(ops, "interval", &p.interval, 10, "how many to ignore");
-	options_string(ops, "in", &p.input_filename, "stdin", "input file (Carmen or JSON)");
-	options_string(ops, "out", &p.output_filename, "", "output file (if empty, input file + '.pdf')");
-	options_double(ops, "lt", &p.line_threshold, 0.2, "threshold for linking points (m)");
-	options_double(ops, "horizon", &p.horizon, 8.0, "horizon of the laser (m)");
-	options_double(ops, "padding", &p.padding, 0.2, "padding around bounding box (m)");
-	options_double(ops, "dimension", &p.dimension, 500.0, "dimension of the image (points)");
-	options_int(ops, "draw_confidence", &p.draw_confidence, 0, " Draws confidence (readings_sigma[i]) ");
-	options_double(ops, "confidence_mult", &p.confidence_mult, 3.0, " 3-sigma ");
-	options_double(ops, "offset_theta_deg", &p.offset_theta_deg, 0.0, " rotate entire map by this angle (deg) ");
+	struct csm_option * ops = csm_options_allocate(12);
+	csm_options_int(ops, "interval", &p.interval, 10, "how many to ignore");
+	csm_options_string(ops, "in", &p.input_filename, "stdin", "input file (Carmen or JSON)");
+	csm_options_string(ops, "out", &p.output_filename, "", "output file (if empty, input file + '.pdf')");
+	csm_options_double(ops, "lt", &p.line_threshold, 0.2, "threshold for linking points (m)");
+	csm_options_double(ops, "horizon", &p.horizon, 8.0, "horizon of the laser (m)");
+	csm_options_double(ops, "padding", &p.padding, 0.2, "padding around bounding box (m)");
+	csm_options_double(ops, "dimension", &p.dimension, 500.0, "dimension of the image (points)");
+	csm_options_int(ops, "draw_confidence", &p.draw_confidence, 0, " Draws confidence (readings_sigma[i]) ");
+	csm_options_double(ops, "confidence_mult", &p.confidence_mult, 3.0, " 3-sigma ");
+	csm_options_double(ops, "offset_theta_deg", &p.offset_theta_deg, 0.0, " rotate entire map by this angle (deg) ");
 
-	options_string(ops, "use", &p.use, "estimate", "One in 'odometry','estimate','true_pose'");
+	csm_options_string(ops, "use", &p.use, "estimate", "One in 'odometry','estimate','true_pose'");
 	
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		sm_error("Could not parse arguments.\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

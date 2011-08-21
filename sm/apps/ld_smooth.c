@@ -1,4 +1,4 @@
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include "../csm/csm_all.h"
 
@@ -16,13 +16,13 @@ void convolve(const int*valid,const double*original, int n, double*dest, double*
 int main(int argc, const char * argv[]) {
 	sm_set_program_name(argv[0]);
 	
-	struct option* ops = options_allocate(3);
-	options_double(ops, "scale_deg", &p.scale_deg, 0.0, "Scale factor (degrees) ");
-	options_int(ops, "neighbours", &p.neighbours, 1, "How many neighbours to consider (regardless of scale).");
+	struct csm_option* ops = csm_options_allocate(3);
+	csm_options_double(ops, "scale_deg", &p.scale_deg, 0.0, "Scale factor (degrees) ");
+	csm_options_int(ops, "neighbours", &p.neighbours, 1, "How many neighbours to consider (regardless of scale).");
 		
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, "A simple program for smoothing a sensor scan.\n\nUsage:\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 

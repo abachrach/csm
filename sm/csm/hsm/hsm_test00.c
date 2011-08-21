@@ -1,6 +1,6 @@
 #include <string.h>
 #include <pgm.h>
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include <csm/csm_all.h>
 
@@ -28,21 +28,21 @@ void write_function_on_image(int n, const double*f, int rows, FILE*out);
 
 int main(int argc, const char**argv) {
 	pgm_init(&argc, argv);
-	options_banner(banner);
+	csm_options_banner(banner);
 	
 	
-	struct option* ops = options_allocate(20);
-	options_string(ops, "in1", &p.file_input1, "stdin", "Input file 1");
-	options_string(ops, "in2", &p.file_input2, "", "Input file 2");
-	options_string(ops, "out", &p.prefix, "test00", "Output file prefix ");
+	struct csm_option* ops = csm_options_allocate(20);
+	csm_options_string(ops, "in1", &p.file_input1, "stdin", "Input file 1");
+	csm_options_string(ops, "in2", &p.file_input2, "", "Input file 2");
+	csm_options_string(ops, "out", &p.prefix, "test00", "Output file prefix ");
 	
-	hsm_add_options(ops, &p.hsmp);
+	hsm_add_csm_options(ops, &p.hsmp);
 	p.hsmp.linear_cell_size = 1; /* 1 pixel */
 		
-	options_int(ops, "debug", &p.debug, 0, "Shows debug information");
+	csm_options_int(ops, "debug", &p.debug, 0, "Shows debug information");
 	
-	if(!options_parse_args(ops, argc, argv)) {
-		options_print_help(ops, stderr);
+	if(!csm_options_parse_args(ops, argc, argv)) {
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

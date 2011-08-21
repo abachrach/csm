@@ -1,4 +1,4 @@
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include <csm/csm_all.h>
 
@@ -10,16 +10,16 @@ int main(int argc, const char * argv[]) {
 	double max_xy;
 	double max_theta_deg;
 	
-	struct option* ops = options_allocate(10);
-	options_string(ops, "in", &input_filename, "stdin", "input file (log)");
-	options_string(ops, "out", &output_filename, "stdout", "output file ");
-	options_double(ops, "max_xy", &max_xy, 100.0, "Max admissible xy displacement");
-	options_double(ops, "max_theta_deg", &max_theta_deg, 360.0, 
+	struct csm_option* ops = csm_options_allocate(10);
+	csm_options_string(ops, "in", &input_filename, "stdin", "input file (log)");
+	csm_options_string(ops, "out", &output_filename, "stdout", "output file ");
+	csm_options_double(ops, "max_xy", &max_xy, 100.0, "Max admissible xy displacement");
+	csm_options_double(ops, "max_theta_deg", &max_theta_deg, 360.0, 
 		"Max admissible theta displacement (deg)");
 	
-	if(!options_parse_args(ops, argc, argv)) {
-		sm_info("computes odometry statistics.\n\nOptions:\n");
-		options_print_help(ops, stderr);
+	if(!csm_options_parse_args(ops, argc, argv)) {
+		sm_info("computes odometry statistics.\n\ncsm_options:\n");
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

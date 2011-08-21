@@ -19,17 +19,17 @@ int main(int argc, const char** argv)
 	sm_set_program_name(argv[0]);
 	struct raytracer_params p;
 	
-	struct option* ops = options_allocate(60);
-	options_string(ops, "map", &p.file_map, "map.json", "Environment description");
-	options_string(ops, "poses", &p.file_poses, "-", "List of poses");
-	options_string(ops, "out", &p.file_output, "stdout", "Output file ");
-	options_int(ops, "nrays", &p.nrays, 181,  "Number of rays");
-	options_double(ops, "fov_deg", &p.fov_deg, 180.0,  "Field of view (degrees)");
-	options_double(ops, "max_reading", &p.max_reading, 80.0,  "Sensor horizon (meters)");
+	struct csm_option* ops = csm_options_allocate(60);
+	csm_options_string(ops, "map", &p.file_map, "map.json", "Environment description");
+	csm_options_string(ops, "poses", &p.file_poses, "-", "List of poses");
+	csm_options_string(ops, "out", &p.file_output, "stdout", "Output file ");
+	csm_options_int(ops, "nrays", &p.nrays, 181,  "Number of rays");
+	csm_options_double(ops, "fov_deg", &p.fov_deg, 180.0,  "Field of view (degrees)");
+	csm_options_double(ops, "max_reading", &p.max_reading, 80.0,  "Sensor horizon (meters)");
 	
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		sm_info(" simulats one scan from map. \n\nUsage:\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

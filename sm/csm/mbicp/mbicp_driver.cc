@@ -27,7 +27,7 @@ PLAYER_LASER_DATA_SCANPOSE)
 
 - none
 
-@par Configuration file options
+@par Configuration file csm_options
 
 - max_laser_range (float)
   - Default: 7.9 m    

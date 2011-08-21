@@ -64,9 +64,9 @@ IF("${CMAKE_SYSTEM}" MATCHES "Linux")
 	ADD_DEFINITIONS(-DLINUX)
 ENDIF("${CMAKE_SYSTEM}" MATCHES "Linux")
 
-########### Options ########## 
+########### csm_options ########## 
 
-SUBDIRS(lib/options)
+SUBDIRS(lib/csm_options)
 SUBDIRS(lib/json-c)
 SUBDIRS(lib/egsl)
 SUBDIRS(lib/gpc)
@@ -181,8 +181,8 @@ SET(csm_sources
 ./lib/json-c/json_util.c
 ./lib/json-c/linkhash.c
 ./lib/json-c/printbuf.c
-./lib/options/options.c
-./lib/options/options_interface.c
+./lib/csm_options/csm_options.c
+./lib/csm_options/csm_options_interface.c
 )
 
 IF(CAIRO_FOUND)

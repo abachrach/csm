@@ -52,51 +52,51 @@ const char* cat(const char*a, const char*b) {
 	return buf;
 }
 
-void ls_add_options(line_style*ls, struct option*ops, 
+void ls_add_csm_options(line_style*ls, struct csm_option*ops, 
 	const char*prefix, const char*desc_prefix) 
 {
-	options_int(ops, cat(prefix, "draw"), &(ls->draw), 
+	csm_options_int(ops, cat(prefix, "draw"), &(ls->draw), 
 		ls->draw, cat(desc_prefix, "Whether to draw it (0,1)"));
 	
-	options_string(ops, cat(prefix, "color"), &(ls->color), 
+	csm_options_string(ops, cat(prefix, "color"), &(ls->color), 
 		ls->color, cat(desc_prefix, "Color ('red', '#f00')"));
 
-	options_double(ops, cat(prefix, "width"), &(ls->width), 
+	csm_options_double(ops, cat(prefix, "width"), &(ls->width), 
 		ls->width, cat(desc_prefix, "line width (meters)"));
 		
 }
 
 
-void lds_add_options(ld_style*lds, struct option*ops, 
+void lds_add_csm_options(ld_style*lds, struct csm_option*ops, 
 	const char*prefix, const char*desc_prefix) 
 {
-	ls_add_options(&(lds->rays), ops, cat(prefix, "rays_"),  cat(desc_prefix, "Rays | "));
-	ls_add_options(&(lds->countour), ops, cat(prefix, "countour_"),  cat(desc_prefix, "Countour | "));
-	ls_add_options(&(lds->points), ops, cat(prefix, "points_"),  cat(desc_prefix, "Points | "));
+	ls_add_csm_options(&(lds->rays), ops, cat(prefix, "rays_"),  cat(desc_prefix, "Rays | "));
+	ls_add_csm_options(&(lds->countour), ops, cat(prefix, "countour_"),  cat(desc_prefix, "Countour | "));
+	ls_add_csm_options(&(lds->points), ops, cat(prefix, "points_"),  cat(desc_prefix, "Points | "));
 	
-	options_double(ops, cat(prefix, "points_radius"), &(lds->points_radius), 
+	csm_options_double(ops, cat(prefix, "points_radius"), &(lds->points_radius), 
 		lds->points_radius, cat(desc_prefix, "Point radius"));
 
 
-	ls_add_options(&(lds->pose), ops, cat(prefix, "pose_"),  cat(desc_prefix, "PoseMarker | "));
+	ls_add_csm_options(&(lds->pose), ops, cat(prefix, "pose_"),  cat(desc_prefix, "PoseMarker | "));
 	
-	options_double(ops, cat(prefix, "pose_radius"), &(lds->pose_radius), 
+	csm_options_double(ops, cat(prefix, "pose_radius"), &(lds->pose_radius), 
 		lds->pose_radius, cat(desc_prefix, "Point radius"));
 
-	ls_add_options(&(lds->normals), ops, cat(prefix, "normals_"),  cat(desc_prefix, "Normals | "));
+	ls_add_csm_options(&(lds->normals), ops, cat(prefix, "normals_"),  cat(desc_prefix, "Normals | "));
 
-	options_double(ops, cat(prefix, "normals_length"), &(lds->normals_length), 
+	csm_options_double(ops, cat(prefix, "normals_length"), &(lds->normals_length), 
 		lds->normals_length, cat(desc_prefix, "Length of normals sticks (meters)"));
 
-	ls_add_options(&(lds->sigma), ops, cat(prefix, "sigma_"),  cat(desc_prefix, "Sigma | "));
+	ls_add_csm_options(&(lds->sigma), ops, cat(prefix, "sigma_"),  cat(desc_prefix, "Sigma | "));
 
-	options_double(ops, cat(prefix, "sigma_multiplier"), &(lds->sigma_multiplier), 
+	csm_options_double(ops, cat(prefix, "sigma_multiplier"), &(lds->sigma_multiplier), 
 		lds->sigma_multiplier, cat(desc_prefix, "Multiplier for sigma"));
 
 
-	options_double(ops, cat(prefix, "connect_threshold"), &(lds->connect_threshold), 
+	csm_options_double(ops, cat(prefix, "connect_threshold"), &(lds->connect_threshold), 
 		lds->connect_threshold, cat(desc_prefix, "Threshold under which points are connected (m)."));
-	options_double(ops, cat(prefix, "horizon"), &(lds->horizon), 
+	csm_options_double(ops, cat(prefix, "horizon"), &(lds->horizon), 
 		lds->horizon, cat(desc_prefix, "Maximum distance to plot (m)."));
 }
 

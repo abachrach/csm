@@ -8,6 +8,6 @@ TARGET_LINK_LIBRARIES(test_csm_options csm_options)
 # installation
 
 FILE(GLOB headers "*.h")
-MESSAGE("INSTALLING options headers: ${headers}")
+MESSAGE("INSTALLING csm_options headers: ${headers}")
 INSTALL(FILES ${headers} DESTINATION include/csm_options)
 INSTALL(TARGETS csm_options ARCHIVE DESTINATION lib)

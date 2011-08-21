@@ -2,7 +2,7 @@
 #define H_LASER_DATA_CAIRO
 
 #include <cairo.h>
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 #include "../csm/csm_all.h"
 #include "../csm/laser_data_drawing.h"
 
@@ -38,10 +38,10 @@ typedef struct {
 void ls_set_defaults(line_style*ls);
 void lds_set_defaults(ld_style*lds);
 
-void ls_add_options(line_style*ls, struct option*ops, 
+void ls_add_csm_options(line_style*ls, struct csm_option*ops, 
 	const char*prefix, const char*desc_prefix);
 
-void lds_add_options(ld_style*lds, struct option*ops, 
+void lds_add_csm_options(ld_style*lds, struct csm_option*ops, 
 	const char*prefix, const char*desc_prefix);
 
 void cr_set_color(cairo_t *cr, const char* color);

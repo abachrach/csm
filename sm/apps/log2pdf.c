@@ -9,7 +9,7 @@
 #include <cairo.h>
 #include <cairo-pdf.h>
 
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include "../csm/csm_all.h"
 #include "../csm/laser_data_drawing.h"
@@ -65,24 +65,24 @@ int main(int argc, const char* argv[]) {
 	p.pose_path.width = 0.1;
 	p.pose_path.color = "#f00";
 	
-	options_banner(banner);
-	struct option * ops = options_allocate(100);
-	options_string(ops, "in", &p.input_filename, "stdin", "input file (Carmen or JSON)");
-	options_string(ops, "out", &p.output_filename, "", "output file (if empty, input file + '.pdf')");
-	options_double(ops, "padding", &p.padding, 0.2, "padding around bounding box (m)");
-	options_double(ops, "dimension", &p.dimension, 500.0, "dimension of the image (points)");
-	options_double(ops, "offset_theta_deg", &p.offset_theta_deg, 0.0, " rotate entire map by this angle (deg) ");
+	csm_options_banner(banner);
+	struct csm_option * ops = csm_options_allocate(100);
+	csm_options_string(ops, "in", &p.input_filename, "stdin", "input file (Carmen or JSON)");
+	csm_options_string(ops, "out", &p.output_filename, "", "output file (if empty, input file + '.pdf')");
+	csm_options_double(ops, "padding", &p.padding, 0.2, "padding around bounding box (m)");
+	csm_options_double(ops, "dimension", &p.dimension, 500.0, "dimension of the image (points)");
+	csm_options_double(ops, "offset_theta_deg", &p.offset_theta_deg, 0.0, " rotate entire map by this angle (deg) ");
 
-	options_string(ops, "use", &p.use, "estimate", "One in 'odometry','estimate','true_pose'");
-	options_double(ops, "distance_xy", &p.distance_xy, 5.0, " Minimum distance between scans (m) ");
-	options_double(ops, "distance_th_deg", &p.distance_th_deg, 45.0, " Minimum distance between scans (deg) ");
-	options_double(ops, "start_pose_width", &p.start_pose_width, 0.4, "First pose | Circle width");
-	lds_add_options(&(p.laser), ops, "laser_", "");
-	ls_add_options(&(p.pose_path), ops, "path_", "");
+	csm_options_string(ops, "use", &p.use, "estimate", "One in 'odometry','estimate','true_pose'");
+	csm_options_double(ops, "distance_xy", &p.distance_xy, 5.0, " Minimum distance between scans (m) ");
+	csm_options_double(ops, "distance_th_deg", &p.distance_th_deg, 45.0, " Minimum distance between scans (deg) ");
+	csm_options_double(ops, "start_pose_width", &p.start_pose_width, 0.4, "First pose | Circle width");
+	lds_add_csm_options(&(p.laser), ops, "laser_", "");
+	ls_add_csm_options(&(p.pose_path), ops, "path_", "");
 	
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		sm_error("Could not parse arguments.\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

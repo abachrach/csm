@@ -1,17 +1,17 @@
 #include "../csm/csm_all.h"
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 int main(int argc, const char * argv[]) {
 	sm_set_program_name(argv[0]);
 	
 	int n;
 	
-	struct option* ops = options_allocate(3);
-	options_int(ops, "n", &n, 1, "Number of copies");
-	if(!options_parse_args(ops, argc, argv)) {
+	struct csm_option* ops = csm_options_allocate(3);
+	csm_options_int(ops, "n", &n, 1, "Number of copies");
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		sm_info("%s : reads a JSON stream and copies it multiplied by n."
-			"\n\nOptions:\n", (char*)argv[0]);
-		options_print_help(ops, stderr);
+			"\n\ncsm_options:\n", (char*)argv[0]);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

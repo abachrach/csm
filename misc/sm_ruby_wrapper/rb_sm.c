@@ -1,7 +1,7 @@
 #include "rb_sm.h"
 #include <stdio.h>
 #include <gsl/gsl_nan.h>
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 struct sm_params rb_sm_params; 
 struct sm_result rb_sm_result;
@@ -28,15 +28,15 @@ void rb_sm_odometry_cov(double cov_x, double cov_y, double cov_theta){
 	
 }
 
-struct option* ops = 0;
+struct csm_option* ops = 0;
 
 int rb_sm_set_configuration(const char*name, const char*value) {
 	if(!ops) { 
-		ops = options_allocate(30);
-		sm_options(&rb_sm_params, ops);
+		ops = csm_options_allocate(30);
+		sm_csm_options(&rb_sm_params, ops);
 	}
 	
-	if(!options_try_pair(ops, name, value)) {
+	if(!csm_options_try_pair(ops, name, value)) {
 
 		return 0;
 	} else

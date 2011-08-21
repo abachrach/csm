@@ -1,4 +1,4 @@
-#include "options.h"
+#include "csm_options.h"
 
 
 
@@ -17,20 +17,20 @@ struct csm_option_alternative alt[4] = {
 };
 
 int main(int argc, const char*argv[]) {
-	options_banner("This is a test program for the options library.");
+	csm_options_banner("This is a test program for the csm_options library.");
 	
 	struct params p;
 	
-	struct csm_option* ops = options_allocate(3);
-	options_int    (ops, "i", &p.a_int,  42, "An int parameter");
-	options_double (ops, "d", &p.a_double,  0.42, "A double parameter");
-	options_string (ops, "s", &p.file ,  "Hello", "A file parameter");
-	options_alternative(ops, "algorith", alt, &p.algo, "which algorithm to use" );
+	struct csm_option* ops = csm_options_allocate(3);
+	csm_options_int    (ops, "i", &p.a_int,  42, "An int parameter");
+	csm_options_double (ops, "d", &p.a_double,  0.42, "A double parameter");
+	csm_options_string (ops, "s", &p.file ,  "Hello", "A file parameter");
+	csm_options_alternative(ops, "algorith", alt, &p.algo, "which algorithm to use" );
 	
 	
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		printf("A simple program.\n\nUsage:\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

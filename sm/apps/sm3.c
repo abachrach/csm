@@ -3,13 +3,13 @@
 
 #include "../csm/csm_all.h"
 
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 struct sm3_params {
 	const char * input_filename;
 	
 } p;
-extern void sm_options(struct sm_params*p, struct option*ops);
+extern void sm_csm_options(struct sm_params*p, struct csm_option*ops);
 
 extern int distance_counter;
 
@@ -20,14 +20,14 @@ int main(int argc, const char*argv[]) {
 	struct sm_params params;
 	struct sm_result result;
 	
-	struct option* ops = options_allocate(100);
-	options_string(ops, "in", &p.input_filename, "stdin",
+	struct csm_option* ops = csm_options_allocate(100);
+	csm_options_string(ops, "in", &p.input_filename, "stdin",
 		"Log file");
 	
-	sm_options(&params, ops);
-	if(!options_parse_args(ops, argc, argv)) {
+	sm_csm_options(&params, ops);
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, "\n\nUsage:\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 

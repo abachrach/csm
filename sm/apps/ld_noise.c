@@ -4,7 +4,7 @@
 #include <math.h>
 #include <libgen.h>
 
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 #include "../csm/csm_all.h"
 
 struct ld_noise_params {
@@ -19,26 +19,26 @@ struct ld_noise_params {
 int main(int argc, const char * argv[]) {
 	sm_set_program_name(argv[0]);
 	
-	options_banner("ld_noise: Adds noise to readings in a scan");
+	csm_options_banner("ld_noise: Adds noise to readings in a scan");
 	
 	struct ld_noise_params p;
 	
-	struct option* ops = options_allocate(20);
-	options_double(ops, "discretization", &p.discretization, 0.0, 
+	struct csm_option* ops = csm_options_allocate(20);
+	csm_options_double(ops, "discretization", &p.discretization, 0.0, 
 		"Size of discretization (disabled if 0)");
-	options_double(ops, "sigma", &p.sigma, 0.0, 
+	csm_options_double(ops, "sigma", &p.sigma, 0.0, 
 		"Std deviation of gaussian noise (disabled if 0)");
-	options_int(ops, "lambertian", &p.lambertian, 0, 
+	csm_options_int(ops, "lambertian", &p.lambertian, 0, 
 		"Use lambertian model cov = sigma^2 / cos(beta^2) where beta is the incidence. Need have alpha or true_alpha.");
-	options_int(ops, "seed", &p.seed, 0, 
+	csm_options_int(ops, "seed", &p.seed, 0, 
 		"Seed for random number generator (if 0, use GSL_RNG_SEED env. variable).");
-	options_string(ops, "in", &p.file_input, "stdin", "Input file ");
-	options_string(ops, "out", &p.file_output, "stdout", "Output file ");
+	csm_options_string(ops, "in", &p.file_input, "stdin", "Input file ");
+	csm_options_string(ops, "out", &p.file_output, "stdout", "Output file ");
 		
 		
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, "A simple program for adding noise to sensor scans.\n\nUsage:\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 

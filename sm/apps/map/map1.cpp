@@ -1,6 +1,6 @@
 #include <string.h>
 #include "pan.h"
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 struct myparams {
 	const char * file_in;
@@ -13,7 +13,7 @@ struct myparams {
 	int algo;
 } p;
 
-extern "C" void sm_options(struct sm_params*p, struct option*ops);
+extern "C" void sm_csm_options(struct sm_params*p, struct csm_option*ops);
 
 
 int main(int argc, const char*argv[]) {
@@ -22,21 +22,21 @@ int main(int argc, const char*argv[]) {
 	struct sm_params params;
 	struct sm_result result;
 	
-	struct option* ops = options_allocate(100);
-	options_string(ops, "in", &p.file_in, "stdin", "Input file ");
-	options_string(ops, "out", &p.file_out, "stdout", "Output file ");
-	options_string(ops, "out_stats", &p.file_out_stats, "", "Output file (stats) ");
-	options_string(ops, "file_jj", &p.file_jj, "",
+	struct csm_option* ops = csm_options_allocate(100);
+	csm_options_string(ops, "in", &p.file_in, "stdin", "Input file ");
+	csm_options_string(ops, "out", &p.file_out, "stdout", "Output file ");
+	csm_options_string(ops, "out_stats", &p.file_out_stats, "", "Output file (stats) ");
+	csm_options_string(ops, "file_jj", &p.file_jj, "",
 		"File for journaling -- if left empty, journal not open.");
-	options_int(ops, "algo", &p.algo, 0, "Which algorithm to use (0:icp 1:gpm-stripped) ");
+	csm_options_int(ops, "algo", &p.algo, 0, "Which algorithm to use (0:icp 1:gpm-stripped) ");
 	p.format = 0;
-/*	options_int(ops, "format", &p.format, 0,
+/*	csm_options_int(ops, "format", &p.format, 0,
 		"Output format (0: log in JSON format, 1: log in Carmen format (not implemented))");*/
 	
-	sm_options(&params, ops);
-	if(!options_parse_args(ops, argc, argv)) {
+	sm_csm_options(&params, ops);
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, "\n\nUsage:\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 

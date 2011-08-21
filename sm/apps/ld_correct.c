@@ -1,7 +1,7 @@
 #include <math.h>
 #include <gsl/gsl_math.h>
 
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 #include "../csm/csm_all.h"
 
@@ -21,24 +21,24 @@ int main(int argc, const char * argv[]) {
 	double vel_omega = 0;
 	
 	
-	struct option* ops = options_allocate(15);
-	options_string(ops, "in", &input_filename, "stdin", "input file");
-	options_string(ops, "out", &output_filename, "stdout", "output file");
-	options_double(ops, "l_x", &(laser[0]), 0.0, "laser x (m)");
-	options_double(ops, "l_y", &(laser[1]), 0.0, "laser y (m)");
-	options_double(ops, "l_theta", &(laser[2]), 0.0, "laser theta (rad)");
+	struct csm_option* ops = csm_options_allocate(15);
+	csm_options_string(ops, "in", &input_filename, "stdin", "input file");
+	csm_options_string(ops, "out", &output_filename, "stdout", "output file");
+	csm_options_double(ops, "l_x", &(laser[0]), 0.0, "laser x (m)");
+	csm_options_double(ops, "l_y", &(laser[1]), 0.0, "laser y (m)");
+	csm_options_double(ops, "l_theta", &(laser[2]), 0.0, "laser theta (rad)");
 
-	options_double(ops, "omega0", &(omega[0]), 0.0, "omega (rad)");
-	options_double(ops, "omega1", &(omega[1]), 0.0, "omega (linear)");
-	options_double(ops, "omega_vel", &(omega_vel), 0.0, "omega x vel");
-	options_double(ops, "vel0", &(vel[0]), 0.0, "vel (m)");
-	options_double(ops, "vel1", &(vel[1]), 0.0, "vel (linear)");
-	options_double(ops, "vel_omega", &(vel_omega), 0.0, "vel x omega");
+	csm_options_double(ops, "omega0", &(omega[0]), 0.0, "omega (rad)");
+	csm_options_double(ops, "omega1", &(omega[1]), 0.0, "omega (linear)");
+	csm_options_double(ops, "omega_vel", &(omega_vel), 0.0, "omega x vel");
+	csm_options_double(ops, "vel0", &(vel[0]), 0.0, "vel (m)");
+	csm_options_double(ops, "vel1", &(vel[1]), 0.0, "vel (linear)");
+	csm_options_double(ops, "vel_omega", &(vel_omega), 0.0, "vel x omega");
 
 		
-	if(!options_parse_args(ops, argc, argv)) {
+	if(!csm_options_parse_args(ops, argc, argv)) {
 		fprintf(stderr, " Corrects bias in odometry.\n");
-		options_print_help(ops, stderr);
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 	

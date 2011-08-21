@@ -3,7 +3,7 @@
 #include <gsl/gsl_math.h>
 
 #include <math.h>
-#include <options/options.h>
+#include <csm_options/csm_options.h>
 
 
 #include "../csm/csm_all.h"
@@ -21,11 +21,11 @@ int main(int argc, const char ** argv) {
 	sm_set_program_name(argv[0]);
 	
 	
-	struct option* ops = options_allocate(3);
-	options_double(ops, "interval", &p.interval, sqrt(2.0), " 1 = no resampling");
+	struct csm_option* ops = csm_options_allocate(3);
+	csm_options_double(ops, "interval", &p.interval, sqrt(2.0), " 1 = no resampling");
 		
-	if(!options_parse_args(ops, argc, argv)) {
-		options_print_help(ops, stderr);
+	if(!csm_options_parse_args(ops, argc, argv)) {
+		csm_options_print_help(ops, stderr);
 		return -1;
 	}
 
